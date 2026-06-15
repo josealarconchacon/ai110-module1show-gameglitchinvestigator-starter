@@ -1,12 +1,15 @@
 import random
 import streamlit as st
 
+from logic_utils import check_guess
+
 def get_range_for_difficulty(difficulty: str):
     if difficulty == "Easy":
         return 1, 20
     if difficulty == "Normal":
         return 1, 100
     if difficulty == "Hard":
+        # FIXME Logic breaks here: Hard should have a wider range that Normal
         return 1, 50
     return 1, 100
 
@@ -27,7 +30,6 @@ def parse_guess(raw: str):
         return False, None, "That is not a number."
 
     return True, value, None
-
 
 def check_guess(guess, secret):
     if guess == secret:
@@ -93,6 +95,8 @@ if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
 
 if "attempts" not in st.session_state:
+    # FIXME: Logic breaks here: Attempts should start at 0 
+    # to match the reset logic in "New Game", but it starts at 1 instead
     st.session_state.attempts = 1
 
 if "score" not in st.session_state:
@@ -107,6 +111,8 @@ if "history" not in st.session_state:
 st.subheader("Make a guess")
 
 st.info(
+    # FIXME: Logic breaks here: The range in the message should match the actual
+    # range for the difficulty level, but it always says 1 to 100
     f"Guess a number between 1 and 100."
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
 )
