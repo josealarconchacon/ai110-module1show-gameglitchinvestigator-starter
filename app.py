@@ -1,7 +1,7 @@
 import random
 import streamlit as st
 
-from logic_utils import check_guess
+from logic_utils import check_guess, initial_game_state
 
 def get_range_for_difficulty(difficulty: str):
     if difficulty == "Easy":
@@ -9,7 +9,6 @@ def get_range_for_difficulty(difficulty: str):
     if difficulty == "Normal":
         return 1, 100
     if difficulty == "Hard":
-        # FIXME Logic breaks here: Hard should have a wider range that Normal
         return 1, 200
     return 1, 100
 
@@ -74,21 +73,9 @@ st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
 if "secret" not in st.session_state:
-    st.session_state.secret = random.randint(low, high)
-
-if "attempts" not in st.session_state:
-    # FIXME: Logic breaks here: Attempts should start at 0 
-    # to match the reset logic in "New Game", but it starts at 1 instead
-    st.session_state.attempts = 1
-
-if "score" not in st.session_state:
-    st.session_state.score = 0
-
-if "status" not in st.session_state:
-    st.session_state.status = "playing"
-
-if "history" not in st.session_state:
-    st.session_state.history = []
+    defaults = initial_game_state(random.randint(low, high))
+    for key, value in defaults.items():
+        st.session_state[key] = value
 
 st.subheader("Make a guess")
 
