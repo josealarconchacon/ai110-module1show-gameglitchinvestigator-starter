@@ -10,7 +10,7 @@ def get_range_for_difficulty(difficulty: str):
         return 1, 100
     if difficulty == "Hard":
         # FIXME Logic breaks here: Hard should have a wider range that Normal
-        return 1, 50
+        return 1, 200
     return 1, 100
 
 
