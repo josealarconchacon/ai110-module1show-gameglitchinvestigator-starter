@@ -1,3 +1,14 @@
+def initial_game_state(secret: int) -> dict:
+    """Returns default state for a new game."""
+    return {
+        "secret": secret,
+        "attempts": 0,
+        "score": 0,
+        "status": "playing",
+        "history": [],
+    }
+
+
 def get_range_for_difficulty(difficulty: str):
     """Return (low, high) inclusive range for a given difficulty."""
     if difficulty == "Easy":
