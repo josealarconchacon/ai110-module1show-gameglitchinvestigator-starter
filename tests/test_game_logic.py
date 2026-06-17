@@ -1,4 +1,4 @@
-from logic_utils import check_guess, get_range_for_difficulty
+from logic_utils import check_guess, get_range_for_difficulty, initial_game_state
 
 def test_winning_guess():
     # If the secret is 50 and guess is 50, it should be a win
@@ -20,3 +20,8 @@ def test_hard_difficulty_range():
     assert get_range_for_difficulty("Easy") == (1, 20)
     assert get_range_for_difficulty("Normal") == (1, 100)
     assert get_range_for_difficulty("Hard") == (1, 200)
+
+def test_initial_attempts_is_zero():
+    # attempts must start at 0 to match the "New Game" reset path
+    state = initial_game_state(secret=42)
+    assert state["attempts"] == 0
