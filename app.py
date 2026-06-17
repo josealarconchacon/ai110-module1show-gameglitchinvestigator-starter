@@ -9,6 +9,8 @@ def get_range_for_difficulty(difficulty: str):
     if difficulty == "Normal":
         return 1, 100
     if difficulty == "Hard":
+        # FIX: Agent mode helped identify that Hard mode range was smaller than Normal, 
+        # making it easier. Updated the range to 1–200 to restore proper difficulty level.
         return 1, 200
     return 1, 100
 
@@ -72,6 +74,7 @@ low, high = get_range_for_difficulty(difficulty)
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
+# attempts now initializes to 0
 if "secret" not in st.session_state:
     defaults = initial_game_state(random.randint(low, high))
     for key, value in defaults.items():
@@ -80,6 +83,8 @@ if "secret" not in st.session_state:
 st.subheader("Make a guess")
 
 st.info(
+    # FIX: Updated UI message to use dynamic bounds ({low}, {high}) instead of hardcoded values. 
+    # Agent mode detect inconsistency between displayed range and selected difficulty.
     f"Guess a number between {low} and {high}."
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
 )
