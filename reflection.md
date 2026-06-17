@@ -14,7 +14,7 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   Bug 1, check_guess() has backwards hint logic
   I expected that if my guess was too high, the game would tell me to go lower. Instead, when I guessed 80 and the secret was 40, the hint said "Go HIGHER!", the exact opposite of what I needed.
 
-  Bug 2, New Game resets attempts to 0, but fresh starts at 1
+  Bug 2, New Game resets attempts to 0, but fresh starts at 1.
   I expected the attempt counter to be consistent regardless of how I started the game. Instead, on a fresh page load attempts initializes to 1, so the display immediately shows one attempt already used before I guessed anything. After clicking New Game, attempts resets to 0 and the full count is restored.
 
   **Bug Reproduction Log**
