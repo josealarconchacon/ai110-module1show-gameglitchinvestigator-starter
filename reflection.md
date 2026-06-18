@@ -45,6 +45,8 @@ Document at least 3 bugs you found. Add rows as needed.
   - **How I verified it:** I double-checked the difficulty logic manually and compared all ranges: Easy was `(1, 20)` and Normal was `(1, 100)`, so Hard should reasonably extend beyond Normal rather than shrink. I then validated the change by running the existing test `test_hard_difficulty_range`, which passed after the update, confirming that Hard correctly returns `(1, 200)`.
 
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
+  - **What the AI did:** While fixing the `check_guess` logic, the AI misled the emoji mapping by pairing a downward chart with Go HIGHER! and an upward chart with Go LOWER!.
+  - **How I verified it:** I caught the misleading icons during a quick visual review of the UI. While the logic worked, I felt the emojis could easily confuse players. I simply swapped the emojis to correctly match the words.
 
 ## 3. Debugging and testing your fixes
 
