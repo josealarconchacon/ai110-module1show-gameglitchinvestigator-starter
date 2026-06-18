@@ -75,7 +75,7 @@ st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
 # attempts now initializes to 0
-if "secret" not in st.session_state:
+if "secret" not in st.session_state or st.session_state.get("difficulty") != difficulty:
     defaults = initial_game_state(random.randint(low, high))
     for key, value in defaults.items():
         st.session_state[key] = value
