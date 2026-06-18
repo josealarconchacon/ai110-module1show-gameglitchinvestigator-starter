@@ -20,6 +20,12 @@ def test_hard_difficulty_range():
     assert get_range_for_difficulty("Easy") == (1, 20)
     assert get_range_for_difficulty("Normal") == (1, 100)
     assert get_range_for_difficulty("Hard") == (1, 200)
+    
+def test_difficulty_fallback_range():
+    # If difficulty is unrecognized, misspelled, or has wrong casing, it should fall back to the Normal range
+    assert get_range_for_difficulty("easy") == (1, 100)
+    assert get_range_for_difficulty("HARD") == (1, 100)
+    assert get_range_for_difficulty("Normal ") == (1, 100)
 
 def test_initial_attempts_is_zero():
     # attempts must start at 0 to match the "New Game" reset path
