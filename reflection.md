@@ -39,10 +39,12 @@ Document at least 3 bugs you found. Add rows as needed.
 ## 2. How did you use AI as a teammate?
 
 - Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
+  -- Claude
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
-- Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
+  -- While reviewing get_range_for_difficulty in logic_utils.py, agent mode pointed out that the Hard difficulty was set to return (1, 50), which was actually narrower than Normal (1, 100). It suggested updating Hard to (1, 200) to better reflect the intended difficulty progression.
+  -- I double checked the difficulty logic manually and compared all ranges: Easy was (1, 20), Normal was (1, 100), so Hard should reasonably extend beyond Normal rather than shrink. I then validated the change by running the existing test test_hard_difficulty_range, which passed after the update, confirming that Hard correctly returns (1, 200).
 
----
+- Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
 
 ## 3. Debugging and testing your fixes
 
