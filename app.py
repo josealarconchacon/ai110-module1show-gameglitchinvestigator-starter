@@ -15,7 +15,7 @@ def get_range_for_difficulty(difficulty: str):
     return 1, 100
 
 
-def parse_guess(raw: str):
+def parse_guess(raw: str, low: int, high: int):
     if raw is None:
         return False, None, "Enter a guess."
 
@@ -29,6 +29,10 @@ def parse_guess(raw: str):
             value = int(raw)
     except Exception:
         return False, None, "That is not a number."
+
+    # Reject guesses outside the difficulty-based range before processing
+    if value < low or value > high:
+        return False, None, f"Please enter a number between {low} and {high}."
 
     return True, value, None
 
@@ -74,18 +78,17 @@ low, high = get_range_for_difficulty(difficulty)
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
-# attempts now initializes to 0
 if "secret" not in st.session_state or st.session_state.get("difficulty") != difficulty:
     defaults = initial_game_state(random.randint(low, high))
     for key, value in defaults.items():
         st.session_state[key] = value
+    st.session_state.difficulty = difficulty
+    st.session_state.last_hint = None
 
 st.subheader("Make a guess")
 
 st.info(
-    # FIX: Updated UI message to use dynamic bounds ({low}, {high}) instead of hardcoded values. 
-    # Agent mode detect inconsistency between displayed range and selected difficulty.
-    f"Guess a number between {low} and {high}."
+    f"Guess a number between {low} and {high}. "
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
 )
 
@@ -109,6 +112,9 @@ with col2:
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
+if st.session_state.get("last_hint") and show_hint:
+    st.warning(st.session_state.last_hint)
+
 if new_game:
     defaults = initial_game_state(random.randint(low, high))
     for key, value in defaults.items():
@@ -118,31 +124,24 @@ if new_game:
 
 if st.session_state.status != "playing":
     if st.session_state.status == "won":
+        st.balloons()
         st.success("You already won. Start a new game to play again.")
     else:
         st.error("Game over. Start a new game to try again.")
     st.stop()
 
 if submit:
-    st.session_state.attempts += 1
-
-    ok, guess_int, err = parse_guess(raw_guess)
+    ok, guess_int, err = parse_guess(raw_guess, low, high)
 
     if not ok:
-        st.session_state.history.append(raw_guess)
         st.error(err)
     else:
+        st.session_state.attempts += 1
         st.session_state.history.append(guess_int)
 
-        if st.session_state.attempts % 2 == 0:
-            secret = str(st.session_state.secret)
-        else:
-            secret = st.session_state.secret
+        outcome, message = check_guess(guess_int, st.session_state.secret)
 
-        outcome, message = check_guess(guess_int, secret)
-
-        if show_hint:
-            st.warning(message)
+        st.session_state.last_hint = message
 
         st.session_state.score = update_score(
             current_score=st.session_state.score,
@@ -151,12 +150,13 @@ if submit:
         )
 
         if outcome == "Win":
-            st.balloons()
             st.session_state.status = "won"
+            st.session_state.last_hint = None
             st.success(
                 f"You won! The secret was {st.session_state.secret}. "
                 f"Final score: {st.session_state.score}"
             )
+            st.rerun()
         else:
             if st.session_state.attempts >= attempt_limit:
                 st.session_state.status = "lost"
@@ -165,6 +165,7 @@ if submit:
                     f"The secret was {st.session_state.secret}. "
                     f"Score: {st.session_state.score}"
                 )
+            st.rerun()
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")
