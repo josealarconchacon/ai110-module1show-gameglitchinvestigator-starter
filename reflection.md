@@ -51,9 +51,13 @@ Document at least 3 bugs you found. Add rows as needed.
 ## 3. Debugging and testing your fixes
 
 - How did you decide whether a bug was really fixed?
-- Describe at least one test you ran (manual or using pytest)  
+- \*\*I decided the bug was fixed when I guessed 25 with a secret of 15, and the hint changed from Go HIGHER to Go LOWER, which is the correct direction.
+- Describe at least one test you ran (manual or using pytest)
   and what it showed you about your code.
+- \*\*I ran a pytest unit test called test_hard_difficulty_range() that checked the outputs for Easy, Normal, and Hard inputs.
+- \*\*The test successfully passed, which showed me that the logic error in the Hard was completely fixed. Originally, it was returning (1, 50), making it narrower and easier than Normal mode. Seeing the test pass with the new output of (1, 200) proved that the conditional logic is now branching correctly and that Hard mode finally scales the difficulty properly to be tougher than Normal.
 - Did AI help you design or understand any tests? How?
+- \*\*Yes, the AI helped me figure out how to test the st.info() banner bug. Since the issue was locked inside the UI, it suggested a manual test instead and walked me through a visual walkthrough. By switching between all three difficulties to watch the banner in real-time.
 
 ---
 
