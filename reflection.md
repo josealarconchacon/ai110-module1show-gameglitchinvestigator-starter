@@ -65,11 +65,17 @@ Document at least 3 bugs you found. Add rows as needed.
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
 
+  Every time you click a button or do anything in a Streamlit app, the whole Python script reruns from the top, like it's starting over. That's what was causing the attempts counter bug. On a fresh load, `attempts` was set to 1 in the code, so before I even guessed anything, it already counted one attempt. Session state is how you save values across those reruns, because anything stored in `st.session_state` actually sticks around instead of getting reset. Once I understood that, I could see why `New Game` had to reset through session state and not just a regular variable.
+
 ---
 
 ## 5. Looking ahead: your developer habits
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
-  - This could be a testing habit, a prompting strategy, or a way you used Git.
+  - Running a manual test right after every fix before moving on is something I want to keep doing, because it stopped me from stacking bugs on top of each other. Catching the hint logic bug early by just playing the game for a minute saved me way more time than if I had found it later.
+
 - What is one thing you would do differently next time you work with AI on a coding task?
+  - I'd question the AI's output a little earlier instead of assuming it's right and then catching it during a review. The emoji mistake slipped through because I was focused on the logic and not the full picture of what the player would actually see.
+
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+  - I used to think AI-generated code either worked or it didn't, but this project showed me it can be logically correct and still wrong in a way that matters. Now I think of AI more like a draft that I still have to read and own before it goes anywhere.
