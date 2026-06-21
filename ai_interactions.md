@@ -25,7 +25,7 @@
 ## Test Generation (SF7)
 
 **Prompt I used to generate the tests:**
-I fixed `parse_guess` so it rejects guesses outside the difficulty range. What edge case inputs could still break it — things like negative numbers, decimals, huge values, empty input, or messy strings like `'3.'` and `'  5  '`? Write me pytest cases for each one, and include boundary tests to make sure the low and high values themselves are accepted.
+I fixed `parse_guess` so it rejects guesses outside the difficulty range. What edge case inputs could still break it, things like negative numbers, decimals, huge values, empty input, or messy strings like `'3.'` and `'  5  '`? Write me pytest cases for each one, and include boundary tests to make sure the low and high values themselves are accepted.
 
 > Document how you used AI to help generate or improve tests.
 
