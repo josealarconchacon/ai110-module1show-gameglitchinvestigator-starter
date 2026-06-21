@@ -119,6 +119,7 @@ if new_game:
     defaults = initial_game_state(random.randint(low, high))
     for key, value in defaults.items():
         st.session_state[key] = value
+    st.session_state.last_hint = None # clears the alert
     st.success("New game started.")
     st.rerun()
 
