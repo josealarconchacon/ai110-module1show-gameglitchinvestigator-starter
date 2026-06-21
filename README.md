@@ -25,9 +25,21 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+**Game purpose:** It's a number guessing game. You pick a difficulty, and the game picks a secret number. You have a limited number of attempts to guess it, and after each guess you get a hint telling you to go higher or lower. Your score changes based on how many attempts it takes and whether your guesses are in the right direction.
+
+**Bugs I found:**
+
+1. The secret number kept changing every time I clicked Submit. The game was picking a new random number on each interaction instead of locking the value in session state, so I was basically chasing a moving target.
+2. The hints were completely backwards. Guessing too high told you to go higher, and guessing too low told you to go lower. The comparison logic in `check_guess` had the "Too High" and "Too Low" returns swapped.
+3. Hard mode was easier than Normal. The range for Hard was set to 1-50, which is a smaller range than Normal (1-100). That's the opposite of what Hard should mean.
+4. Out-of-range guesses were accepted without complaint. Typing a number like 500 on Easy mode (range 1-20) would go through and get processed as a valid guess.
+
+**Fixes I applied:**
+
+1. Moved the secret number into `st.session_state` so it only gets generated once at the start of a game and stays put until the player starts a new one.
+2. Swapped the return values in `check_guess` so "Too High" returns when the guess is above the secret, and "Too Low" returns when it's below.
+3. Updated Hard mode's range to 1-200 so the difficulties actually scale in order: Easy (1-20), Normal (1-100), Hard (1-200).
+4. Added range validation in `parse_guess` to reject anything outside the current difficulty's bounds before it ever reaches the game logic.
 
 ## 📸 Demo Walkthrough
 
