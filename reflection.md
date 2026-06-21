@@ -18,8 +18,7 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   I expected the attempt counter to be consistent regardless of how I started the game. Instead, on a fresh page load attempts initializes to 1, so the display immediately shows one attempt already used before I guessed anything. After clicking New Game, attempts resets to 0 and the full count is restored.
 
   **Bug Reproduction Log**
-
-Document at least 3 bugs you found. Add rows as needed.
+  Document at least 3 bugs you found. Add rows as needed.
 
 | Input         | Expected Behavior      | Actual Behavior          | Console Output / Error |
 | ------------- | ---------------------- | ------------------------ | ---------------------- |

@@ -10,7 +10,7 @@ def get_range_for_difficulty(difficulty: str):
         return 1, 100
     if difficulty == "Hard":
         # FIX: Agent mode helped identify that Hard mode range was smaller than Normal, 
-        # making it easier. Updated the range to 1–200 to restore proper difficulty level.
+        # making it easier. Updated the range to 1–200 to restore proper difficulty level
         return 1, 200
     return 1, 100
 
