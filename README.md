@@ -55,9 +55,16 @@ The secret number for this run is **63** (Normal difficulty, range 1-100, 8 atte
 ## 🧪 Test Results
 
 ```
-# Paste your pytest output here, e.g.:
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
+python -m pytest tests/
+=========================================== test session starts ===========================================
+platform darwin -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
+rootdir: /Users/--****--/Desktop/CodePath/ai110-module1show-gameglitchinvestigator-starter
+plugins: anyio-4.7.0
+collected 16 items
+
+tests/test_game_logic.py ................                                                           [100%]
+
+=========================================== 16 passed in 1.24s ============================================
 ```
 
 ## 🚀 Stretch Features
